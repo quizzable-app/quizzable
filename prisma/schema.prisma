@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+// generator erd {
+//   provider = "prisma-erd-generator"
+// }
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  INSTRUCTOR
+  STUDENT
+}
+
+model Organization {
+  id                BigInt @id @default(autoincrement())
+  canvasRootAccount String @unique
+  name              String
+
+  Users    User[]
+  Courses  Course[]
+  Sections Section[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id             BigInt  @id @default(autoincrement())
+  canvasId       BigInt? @unique
+  email          String  @unique
+  firebaseUid    String? @unique
+  name           String
+  organizationId BigInt?
+  sisLoginId     String?
+  sisUserId      String?
+
+  Organization     Organization? @relation(fields: [organizationId], references: [id])
+  QuestionsCreated Question[]    @relation("QuestionCreated")
+  QuizzesCreated   Quiz[]        @relation("QuizCreated")
+  Roles            Role[]
+  Scores           Score[]
+  Sections         Section[]     @relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, sisLoginId])
+  @@unique([organizationId, sisUserId])
+}
+
+model Course {
+  id             BigInt  @id @default(autoincrement())
+  name           String
+  description    String?
+  organizationId BigInt
+  sisCourseId    String
+
+  Organization Organization @relation(fields: [organizationId], references: [id])
+  Questions    Question[]   @relation
+  Quizzes      Quiz[]
+  Scores       Score[]
+  Sections     Section[]    @relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, sisCourseId])
+}
+
+model Section {
+  id             BigInt  @id @default(autoincrement())
+  name           String
+  description    String?
+  courseId       BigInt
+  organizationId BigInt
+  sisSectionId   String
+
+  Course       Course       @relation(fields: [courseId], references: [id])
+  Organization Organization @relation(fields: [organizationId], references: [id])
+  Quizzes      Quiz[]
+  Scores       Score[]
+  Users        User[]       @relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, sisSectionId])
+}
+
+model Question {
+  id           BigInt   @id @default(autoincrement())
+  answer       Int[] // Index of the correct choice(s) in the choices array
+  choices      String[]
+  courseId     BigInt
+  createdById  BigInt
+  points       Int
+  prompt       String
+  timeAllotted Int
+
+  Courses   Course @relation(fields: [courseId], references: [id])
+  CreatedBy User   @relation(fields: [createdById], references: [id], name: "QuestionCreated")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Quiz {
+  id          BigInt   @id @default(autoincrement())
+  courseId    BigInt
+  createdById BigInt
+  sectionId   BigInt
+  questions   BigInt[]
+
+  CreatedBy User    @relation(fields: [createdById], references: [id], name: "QuizCreated")
+  Course    Course  @relation(fields: [courseId], references: [id])
+  Section   Section @relation(fields: [sectionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Score {
+  id             BigInt @id @default(autoincrement())
+  userId         BigInt
+  courseId       BigInt
+  sectionId      BigInt
+  points         Int
+  pointsPossible Int
+
+  User    User    @relation(fields: [userId], references: [id])
+  Course  Course  @relation(fields: [courseId], references: [id])
+  Section Section @relation(fields: [sectionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

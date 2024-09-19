@@ -1,0 +1,37 @@
+{
+  "name": "quizzable",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "prisma db push && turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^2.1.1",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "esbuild": "^0.23.1",
+    "firebase": "^10.13.1",
+    "prisma": "^5.19.1"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "optionalDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.1.1",
+    "prisma-erd-generator": "^1.2.5"
+  }
+}

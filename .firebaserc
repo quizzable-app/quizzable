@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "prod": "quizzable-prod",
+    "dev": "quizzable-dev"
+  }
+}
