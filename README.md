@@ -24,15 +24,17 @@ cp apps/functions/.env.example apps/functions/.env
 cp apps/web/.env.example apps/web/.env
 ```
 
-To run the project, you'll need to install the dependencies and start the development server.
+To run the project, you'll need to install the dependencies, create the database, and start the development server.
 
 ```bash
 npm install
+npx prisma db push
 npm run dev
 ```
 
-You can also run [tmux.sh](tmux.sh) to start a few background processes.
+You can also add some seed data and view it in Prisma Studio.
 
 ```bash
-./tmux.sh
+npx prisma db seed
+npx prisma studio
 ```
