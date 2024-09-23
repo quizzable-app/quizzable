@@ -13,31 +13,10 @@ import { prisma } from "./prisma";
 export const beforesignin = beforeUserSignedIn(beforeUserSignedInHandler);
 export const beforecreated = beforeUserCreated(beforeUserCreatedHandler);
 
-export async function updateFirebaseUser({
-  user,
-  firebaseUser,
-}: {
-  user: User;
-  firebaseUser: AuthUserRecord;
-}) {
-  // Update firebaseUser's name to match user's name
-  if (firebaseUser.displayName !== user.name) {
-    getAuth()
-      .updateUser(firebaseUser.uid, {
-        displayName: user.name,
-      })
-      .then((userRecord) => {
-        console.log("Successfully updated user", userRecord.toJSON());
-      })
-      .catch((error) => {
-        console.log("Error updating user:", error);
-      });
-  }
-}
-
 export async function beforeUserCreatedHandler(
   event: AuthBlockingEvent
 ): Promise<{
+  displayName: string;
   customClaims: {
     userId: string;
     roles: string[];
@@ -69,9 +48,8 @@ export async function beforeUserCreatedHandler(
     });
   }
 
-  await updateFirebaseUser({ user, firebaseUser });
-
   return {
+    displayName: user.name,
     customClaims: {
       userId: user.id.toString(),
       roles: user.Roles,
@@ -82,6 +60,7 @@ export async function beforeUserCreatedHandler(
 export async function beforeUserSignedInHandler(
   event: AuthBlockingEvent
 ): Promise<{
+  displayName: string;
   customClaims: {
     userId: string;
     roles: string[];
@@ -92,9 +71,8 @@ export async function beforeUserSignedInHandler(
     where: { firebaseUid: firebaseUser.uid },
   });
 
-  await updateFirebaseUser({ user, firebaseUser });
-
   return {
+    displayName: user.name,
     customClaims: {
       userId: user.id.toString(),
       roles: user.Roles,
