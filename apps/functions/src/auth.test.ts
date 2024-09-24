@@ -95,7 +95,7 @@ suite("auth.test.ts", { sequential: true }, async () => {
       } catch (err: any) {
         expect(err).toBeInstanceOf(HttpsError);
         expect(err.code).toBe("already-exists");
-        expect(err.message).toBe("User already exists");
+        expect(err.message).toBe("User has already been linked to Firebase");
       }
     });
 

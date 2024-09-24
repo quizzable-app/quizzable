@@ -27,23 +27,25 @@ export async function beforeUserCreatedHandler(
     where: { email: firebaseUser.email },
   });
 
-  if (!user) {
-    if (!firebaseUser.displayName) {
-      throw new HttpsError("invalid-argument", "Display name is required");
-    }
+  if (user?.firebaseUid) {
+    throw new HttpsError(
+      "already-exists",
+      "User has already been linked to Firebase"
+    );
+  } else if (user) {
+    user = await prisma.user.update({
+      where: { id: user.id },
+      data: { firebaseUid: firebaseUser.uid },
+    });
+  } else if (!firebaseUser.displayName) {
+    throw new HttpsError("invalid-argument", "Display name is required");
+  } else {
     user = await prisma.user.create({
       data: {
         email: firebaseUser.email,
         firebaseUid: firebaseUser.uid,
         name: firebaseUser.displayName,
       },
-    });
-  } else if (user.firebaseUid) {
-    throw new HttpsError("already-exists", "User already exists");
-  } else {
-    user = await prisma.user.update({
-      where: { id: user.id },
-      data: { firebaseUid: firebaseUser.uid },
     });
   }
 
