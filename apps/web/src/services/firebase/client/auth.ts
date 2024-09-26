@@ -1,6 +1,10 @@
 "use client";
 
-import { getAuth, connectAuthEmulator } from "firebase/auth";
+import {
+  getAuth,
+  connectAuthEmulator,
+  signInWithCustomToken,
+} from "firebase/auth";
 import { useEmulators } from "../config";
 import { firebaseApp } from "./app";
 
@@ -16,3 +20,6 @@ export async function signOut() {
     console.error("Error signing out with Google", error);
   }
 }
+
+(globalThis as any).signInWithCustomToken = (token: string) =>
+  signInWithCustomToken(firebaseAuth, token);

@@ -1,11 +1,12 @@
 import { defineConfig, devices } from "@playwright/test";
+import { resolve } from "path";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./tests",
-  globalSetup: "./global.setup.ts",
+  testDir: resolve("./tests"),
+  globalSetup: resolve("./global.setup.ts"),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -20,7 +21,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
-
+    video: "on",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
   },
@@ -31,8 +32,7 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        baseURL: "http://localhost:3000",
-        storageState: "storageState.json",
+        baseURL: process.env.BASE_URL,
       },
     },
 

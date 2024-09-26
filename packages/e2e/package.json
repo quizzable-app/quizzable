@@ -1,6 +1,5 @@
 {
   "name": "@repo/e2e",
-  "type": "module",
   "scripts": {
     "test": "dotenvx run -- ./test.sh"
   },
