@@ -15,4 +15,5 @@ curl -sS --retry 10 \
     --retry-connrefused \
     '127.0.0.1:9099'
 
+curl -X DELETE http://127.0.0.1:9099/emulator/v1/projects/$FIREBASE_PROJECT_ID/accounts
 playwright test
