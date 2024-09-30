@@ -3,10 +3,10 @@ import { initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { prisma } from "./lib/prisma";
 
-const { FIREBASE_PROJECT_ID } = process.env;
+const { NEXT_PUBLIC_FIREBASE_PROJECT_ID: projectId } = process.env;
 const testUid = "E2E_TEST_UID";
 
-initializeApp({ projectId: FIREBASE_PROJECT_ID });
+initializeApp({ projectId });
 
 async function globalSetup(config: FullConfig) {
   const testUser = await prisma.user.findFirstOrThrow();

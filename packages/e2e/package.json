@@ -1,5 +1,5 @@
 {
-  "name": "@repo/e2e",
+  "name": "e2e",
   "scripts": {
     "test": "dotenvx run -- ./test.sh"
   },
