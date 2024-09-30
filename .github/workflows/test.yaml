@@ -7,6 +7,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     environment: test
+    container: mcr.microsoft.com/playwright:v1.47.2-noble
     services:
       postgres:
         image: postgres
@@ -26,7 +27,7 @@ jobs:
         with:
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
           WAIT_FOR_CONNECTION: true
-      - run: npm ci --no-optional
-      - run: tmux new -d npm run test --workspace functions
+      - run: npm ci
+      - run: npm run test --workspace functions
         env:
           TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
