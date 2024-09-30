@@ -16,13 +16,13 @@ jobs:
       BASE_URL: ${{ vars.BASE_URL }}
       DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
       FIREBASE_AUTH_EMULATOR_HOST: ${{ vars.FIREBASE_AUTH_EMULATOR_HOST }}
+      GOOGLE_APPLICATION_CREDENTIALS: "/opt/gcp_key.json"
       NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
       NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
       NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
       NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
       NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
-      GOOGLE_APPLICATION_CREDENTIALS: "/opt/gcp_key.json"
       TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
     services:
       postgres:
@@ -46,7 +46,7 @@ jobs:
           cache: "npm"
       - name: Setup
         run: |
-          npm ci
+          npm ci --omit=optional
           npm i -g firebase-tools
           su -c "apt-get update && apt-get install tmux -y"
           echo "${{ secrets.GCP_SA_KEY }}" | base64 -d > /opt/gcp_key.json
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: test-report
           path: |
             packages/e2e/playwright-report/
             packages/e2e/functions.log
