@@ -22,7 +22,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: tmshkr/ngrok-ssh@latest
+        with:
+          NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+          WAIT_FOR_CONNECTION: true
       - run: npm ci --no-optional
-      - run: npm run test --workspace functions
+      - run: tmux new -d npm run test --workspace functions
         env:
           TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
