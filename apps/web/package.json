@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
+    "deploy": "./deploy.sh",
     "e2e": "TESTING=true next dev --turbo",
     "build": "next build",
     "start": "next start",
