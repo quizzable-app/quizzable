@@ -49,7 +49,7 @@ jobs:
           cache: "npm"
       - name: Setup
         run: |
-          npm ci --omit=optional
+          npm ci
           npm i -g firebase-tools vercel
           # su -c "apt-get update && apt-get install tmux -y"
           echo "${{ secrets.GCP_SA_KEY }}" | base64 -d > /opt/gcp_key.json
