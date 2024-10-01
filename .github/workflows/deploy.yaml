@@ -67,7 +67,9 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             PRISMA_QUERY_ENGINE_LIBRARY="lib/libquery_engine-debian-openssl-3.0.x.so.node"
       - name: Deploy
-        run: tmux -d npm run deploy
+        run: |
+          tmux new-session -d -s deploy
+          tmux send-keys -t deploy 'npm run deploy' C-m
       # - name: Cleanup
       #   if: always()
       #   run: shred -uv /opt/gcp_key.json
