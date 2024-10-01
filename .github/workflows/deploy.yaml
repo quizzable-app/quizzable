@@ -26,7 +26,7 @@ jobs:
     #       --health-retries 5
     env:
       BASE_URL: ${{ vars.BASE_URL }}
-      DATABASE_URL: ${{ vars.DATABASE_URL }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
       FIREBASE_AUTH_EMULATOR_HOST: "127.0.0.1:9099"
       GOOGLE_APPLICATION_CREDENTIALS: "/opt/gcp_key.json"
       NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
