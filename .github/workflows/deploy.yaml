@@ -50,6 +50,7 @@ jobs:
       - uses: tmshkr/ngrok-ssh@latest
         with:
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+          WAIT_FOR_CONNECTION: true
       - name: Setup
         run: |
           npm ci
