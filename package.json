@@ -3,10 +3,18 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build:ci": "turbo run build:ci",
     "deploy": "prisma db push && turbo run deploy --env-mode=loose",
     "dev": "prisma db push && turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "esbuild": "^0.23.1",
+    "firebase": "^10.13.1",
+    "prisma": "^5.19.1",
+    "vitest": "^2.1.1"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -22,19 +30,8 @@
     "apps/*",
     "packages/*"
   ],
-  "dependencies": {
-    "@prisma/client": "^5.19.0",
-    "esbuild": "^0.23.1",
-    "firebase": "^10.13.1",
-    "prisma": "^5.19.1",
-    "vitest": "^2.1.1"
-  },
   "prisma": {
     "schema": "prisma/schema.prisma",
     "seed": "tsx prisma/seed.ts"
-  },
-  "optionalDependencies": {
-    "@mermaid-js/mermaid-cli": "^11.1.1",
-    "prisma-erd-generator": "^1.2.5"
   }
 }
