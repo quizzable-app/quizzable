@@ -3,7 +3,7 @@ services:
     image: mcr.microsoft.com/devcontainers/universal:2-focal
     command: sleep infinity
     volumes:
-      - ..:/workspace:cached
+      - ../..:/workspaces:cached
 
   postgres:
     image: postgres:latest
