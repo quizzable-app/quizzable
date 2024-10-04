@@ -24,7 +24,6 @@
       "extensions": [
         "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
-        "humao.rest-client",
         "mechatroner.rainbow-csv",
         "ms-vsliveshare.vsliveshare",
         "prisma.prisma"
