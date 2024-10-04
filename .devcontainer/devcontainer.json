@@ -2,7 +2,15 @@
   "name": "quizzable-codespace",
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
-  "workspaceFolder": "/workspaces/quizzable",
+  "secrets": {
+    "QUIZZABLE_FIREBASE_API_KEY": {},
+    "QUIZZABLE_FIREBASE_APP_ID": {},
+    "QUIZZABLE_FIREBASE_AUTH_DOMAIN": {},
+    "QUIZZABLE_FIREBASE_MESSAGING_SENDER_ID": {},
+    "QUIZZABLE_FIREBASE_PROJECT_ID": {},
+    "QUIZZABLE_FIREBASE_STORAGE_BUCKET": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": ".devcontainer/post-create.sh",
   "customizations": {
     "vscode": {

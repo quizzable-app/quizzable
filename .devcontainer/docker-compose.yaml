@@ -1,8 +1,11 @@
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/universal:2
+    image: mcr.microsoft.com/devcontainers/universal:2-focal
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
 
-  db:
+  postgres:
     image: postgres:latest
     restart: unless-stopped
     volumes:
