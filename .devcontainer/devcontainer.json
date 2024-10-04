@@ -11,9 +11,26 @@
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": ".devcontainer/post-create.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "additionalVersions": "17",
+      "installGradle": "true",
+      "installMaven": "true"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
   "customizations": {
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode"]
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "humao.rest-client",
+        "ms-vsliveshare.vsliveshare",
+        "prisma.prisma"
+      ]
     }
   }
 }
