@@ -8,6 +8,14 @@ import {
 import { useEmulators } from "../config";
 import { firebaseApp } from "./app";
 
+declare global {
+  interface Window {
+    signInWithCustomToken: (
+      token: string
+    ) => ReturnType<typeof signInWithCustomToken>;
+  }
+}
+
 export const firebaseAuth = getAuth(firebaseApp);
 if (useEmulators) {
   connectAuthEmulator(firebaseAuth, "http://127.0.0.1:9099");
@@ -21,5 +29,7 @@ export async function signOut() {
   }
 }
 
-(globalThis as any).signInWithCustomToken = (token: string) =>
-  signInWithCustomToken(firebaseAuth, token);
+if (typeof window !== "undefined") {
+  window.signInWithCustomToken = (token: string) =>
+    signInWithCustomToken(firebaseAuth, token);
+}
