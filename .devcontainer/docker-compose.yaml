@@ -1,7 +1,8 @@
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/typescript-node:20-bullseye
+    image: mcr.microsoft.com/devcontainers/typescript-node:20
     command: sleep infinity
+    network_mode: service:postgres
     volumes:
       - ../..:/workspaces:cached
 
