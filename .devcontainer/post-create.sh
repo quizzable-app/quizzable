@@ -12,6 +12,7 @@ echo "DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-dev?
 # apps/functions/.env
 echo "DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-dev?schema=public" >apps/functions/.env
 echo "PRISMA_QUERY_ENGINE_LIBRARY=../../node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node" >>apps/functions/.env
+echo "TEST_DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-test?schema=public" >>apps/functions/.env
 
 # apps/web/.env
 echo "DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-dev?schema=public" >apps/web/.env
@@ -22,6 +23,7 @@ echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=127.0.0.1:9099" >>apps/web/.env
 echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=$QUIZZABLE_FIREBASE_PROJECT_ID" >>apps/web/.env
 echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$QUIZZABLE_FIREBASE_STORAGE_BUCKET" >>apps/web/.env
 echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=$QUIZZABLE_FIREBASE_MESSAGING_SENDER_ID" >>apps/web/.env
+echo "TEST_DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-test?schema=public" >>apps/web/.env
 
 # packages/e2e/.env
 echo "BASE_URL=http://localhost:3000" >packages/e2e/.env
@@ -34,7 +36,7 @@ echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=127.0.0.1:9099" >>packages/e2e/.env
 echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=$QUIZZABLE_FIREBASE_PROJECT_ID" >>packages/e2e/.env
 echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$QUIZZABLE_FIREBASE_STORAGE_BUCKET" >>packages/e2e/.env
 echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=$QUIZZABLE_FIREBASE_MESSAGING_SENDER_ID" >>packages/e2e/.env
-echo "TEST_DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-dev?schema=public" >packages/e2e/.env
+echo "TEST_DATABASE_URL=postgresql://admin:LocalPasswordOnly@localhost/quizzable-test?schema=public" >>packages/e2e/.env
 
 
 # Setup Postgres
