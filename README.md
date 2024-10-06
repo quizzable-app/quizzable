@@ -10,7 +10,7 @@ This project is a starting point for a Firebase application using Next.js and a 
 
 ### Developing with GitHub Codespaces
 
-To get started developing the app with GitHub Codespaces, select `New with options...` from the Codespaces tab, as described in the [About recommended secrets](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/configuring-dev-containers/specifying-recommended-secrets-for-a-repository?utm_source=pocket_saves#about-recommended-secrets) section of the documentation. This will prompt you to enter some environment variables, which will be used to configure the Firebase project. The environment variables only need to be entered once.
+To get started developing the app with GitHub Codespaces, [create a new Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository) from the GitHub repository's page. The Codespace will be configured with the [recommended secrets](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/configuring-dev-containers/specifying-recommended-secrets-for-a-repository#about-recommended-secrets).
 
 Once the Codespace is successfully created and configured, run the following commands to login to Firebase and use the correct project:
 
