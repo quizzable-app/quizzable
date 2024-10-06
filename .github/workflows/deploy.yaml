@@ -61,7 +61,7 @@ jobs:
           filename: apps/functions/.env
           env: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
-            PRISMA_QUERY_ENGINE_LIBRARY="lib/libquery_engine-debian-openssl-3.0.x.so.node"
+            PRISMA_QUERY_ENGINE_LIBRARY="dist/libquery_engine-debian-openssl-3.0.x.so.node"
       - name: Build
         run: npm run build:ci
       - name: Deploy
