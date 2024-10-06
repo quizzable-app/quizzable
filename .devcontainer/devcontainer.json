@@ -9,7 +9,7 @@
     "QUIZZABLE_FIREBASE_PROJECT_ID": {},
     "QUIZZABLE_FIREBASE_STORAGE_BUCKET": {}
   },
-  "forwardPorts": ["postgres:5433"],
+  "forwardPorts": [5433],
   "portsAttributes": {
     "5433": { "label": "PostgreSQL", "onAutoForward": "silent" }
   },

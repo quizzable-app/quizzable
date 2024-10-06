@@ -2,6 +2,7 @@ services:
   app:
     image: mcr.microsoft.com/devcontainers/javascript-node:20
     command: sleep infinity
+    network_mode: service:postgres
     volumes:
       - ../..:/workspaces:cached
 
