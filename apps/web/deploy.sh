@@ -6,8 +6,6 @@ if [ -z "$VERCEL_TOKEN" ]; then
 fi
 
 cd ../../
-vercel link --yes --project quizzable --token $VERCEL_TOKEN
-vercel build --yes --token $VERCEL_TOKEN
 
 if [ "$GITHUB_REF_NAME" == "main" ]; then
     vercel deploy --prebuilt --prod --token $VERCEL_TOKEN

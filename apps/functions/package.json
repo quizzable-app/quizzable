@@ -1,8 +1,9 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --outdir=lib",
-    "build:watch": "esbuild src/index.ts --bundle --platform=node --outdir=lib --watch",
+    "build": "esbuild src/index.ts --bundle --platform=node --outdir=dist",
+    "build:ci": "esbuild src/index.ts --bundle --platform=node --outdir=dist",
+    "build:watch": "esbuild src/index.ts --bundle --platform=node --outdir=dist --watch",
     "dev": "npm run build && firebase emulators:start --only auth,functions,database --import=./data --export-on-exit=./data",
     "e2e": "npm run build && TESTING=true firebase emulators:start --only auth,functions,database",
     "shell": "npm run build && firebase functions:shell",
@@ -14,7 +15,7 @@
   "engines": {
     "node": "20"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "@prisma/client": "^5.19.1",
     "firebase-admin": "^12.1.0",

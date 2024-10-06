@@ -12,14 +12,11 @@ if [ -z "$DATABASE_URL" ]; then
   exit 1
 fi
 
-target_engine="lib/libquery_engine-debian-openssl-3.0.x.so.node"
+target_engine="dist/libquery_engine-debian-openssl-3.0.x.so.node"
 if [ "$PRISMA_QUERY_ENGINE_LIBRARY" != "$target_engine" ]; then
   echo "PRISMA_QUERY_ENGINE_LIBRARY should be set to $target_engine"
   exit 1
 fi
 
-mkdir -p lib
-cp ../../node_modules/.prisma/client/libquery_engine-debian-openssl-3.0.x.so.node lib
-
-prisma generate
-npm run build
+mkdir -p dist
+cp ../../node_modules/prisma/libquery_engine-debian-openssl-3.0.x.so.node dist
