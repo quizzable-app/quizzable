@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable no-unused-vars */
 import {
   getAuth,
   connectAuthEmulator,
