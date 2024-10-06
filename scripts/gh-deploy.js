@@ -11,13 +11,15 @@ execSync(
 getRunUrl();
 
 async function getRunUrl() {
-  const res = execSync(
-    `gh run list --workflow deploy.yaml --commit $(git rev-parse HEAD) --event workflow_dispatch --limit 1 --json url,createdAt`
-  ).toString();
+  const [res] = JSON.parse(
+    execSync(
+      `gh run list --workflow deploy.yaml --commit $(git rev-parse HEAD) --event workflow_dispatch --limit 1 --json url,createdAt`
+    ).toString()
+  );
 
-  const { url, createdAt } = res ? JSON.parse(res)[0] : {};
+  const { url, createdAt } = res;
 
-  if (new Date(createdAt) >= now) {
+  if (new Date(createdAt || 0) >= now) {
     console.log(`Opening the workflow run: ${url}`);
     if (osType === "Darwin") {
       execSync(`open ${url}`);
