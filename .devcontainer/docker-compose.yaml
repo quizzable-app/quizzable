@@ -2,16 +2,16 @@ services:
   app:
     image: mcr.microsoft.com/devcontainers/javascript-node:20
     command: sleep infinity
-    network_mode: service:postgres
     volumes:
       - ../..:/workspaces:cached
 
   postgres:
-    image: postgres:latest
+    image: postgres:17
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
+      PGPORT: 5433
       POSTGRES_DB: postgres
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: LocalPasswordOnly

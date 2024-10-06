@@ -9,9 +9,9 @@
     "QUIZZABLE_FIREBASE_PROJECT_ID": {},
     "QUIZZABLE_FIREBASE_STORAGE_BUCKET": {}
   },
-  "forwardPorts": [5432],
+  "forwardPorts": ["postgres:5433"],
   "portsAttributes": {
-    "5432": { "label": "PostgreSQL", "onAutoForward": "silent" }
+    "5433": { "label": "PostgreSQL", "onAutoForward": "silent" }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": ".devcontainer/post-create.sh",
