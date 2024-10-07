@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev --turbo",
     "deploy": "./deploy.sh",
-    "e2e": "TESTING=true next dev --turbo",
     "build": "next build",
     "build:ci": "./build-ci.sh",
     "start": "next start",

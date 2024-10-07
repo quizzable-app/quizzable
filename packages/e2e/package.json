@@ -1,7 +1,8 @@
 {
   "name": "e2e",
   "scripts": {
-    "test": "dotenvx run -- ./test.sh"
+    "test": "dotenvx run -- ./test.sh",
+    "test:ci": "./test.sh"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
