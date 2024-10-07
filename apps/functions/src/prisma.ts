@@ -1,6 +1,5 @@
-const { DATABASE_URL, TEST_DATABASE_URL, TESTING } = process.env;
-const datasourceUrl = TESTING ? TEST_DATABASE_URL : DATABASE_URL;
+const { DATABASE_URL, TEST_DATABASE_URL } = process.env;
 import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient({
-  datasourceUrl,
+  datasourceUrl: TEST_DATABASE_URL ?? DATABASE_URL,
 });
