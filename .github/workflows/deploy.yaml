@@ -70,12 +70,6 @@ jobs:
           DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
           FIREBASE_AUTH_EMULATOR_HOST: "127.0.0.1:9099"
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "127.0.0.1:9099"
-      - uses: tmshkr/handle-env@v1.2
-        with:
-          filename: apps/functions/.env
-          env: |
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            PRISMA_QUERY_ENGINE_LIBRARY="dist/libquery_engine-debian-openssl-3.0.x.so.node"
       - name: Build
         run: npm run build:ci
       - name: Deploy
@@ -98,4 +92,6 @@ jobs:
           retention-days: 30
       - name: Cleanup
         if: always()
-        run: shred -uv /opt/gcp_key.json
+        run: |
+          shred -uv /opt/gcp_key.json
+          shred -uv apps/functions/.env
