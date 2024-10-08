@@ -1,8 +1,7 @@
 {
   "name": "e2e",
   "scripts": {
-    "test": "dotenvx run -- ./test.sh",
-    "test:ci": "../../scripts/reset-db.sh && ./test.sh"
+    "test": "./test.sh"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",

@@ -64,12 +64,13 @@ jobs:
         env:
           TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
       - name: Run e2e tests
-        run: npm run test:ci --workspace e2e
+        run: npm run test --workspace e2e
         env:
           BASE_URL: http://localhost:3000
           DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
           FIREBASE_AUTH_EMULATOR_HOST: "127.0.0.1:9099"
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "127.0.0.1:9099"
+          RESET_DB: true
       - uses: tmshkr/handle-env@v1.2
         with:
           filename: apps/functions/.env
@@ -83,7 +84,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Run e2e tests
-        run: npm run test:ci --workspace e2e
+        run: npm run test --workspace e2e
         env:
           BASE_URL: ${{ vars.BASE_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

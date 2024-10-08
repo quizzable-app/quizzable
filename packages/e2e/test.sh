@@ -1,5 +1,13 @@
 #!/bin/bash -e
 
+if [ -f .env ]; then
+    export $(cat .env | sed 's/#.*//g' | xargs)
+fi
+
+if [ "$RESET_DB" == "true" ]; then
+    ../../scripts/reset-db.sh
+fi
+
 if tmux new -d -s e2e 2>/dev/null; then
     tmux send-keys -t e2e 'npm run dev --workspace functions > functions.log 2>&1 & tail -f functions.log' C-m
     tmux split-window -v -t e2e
