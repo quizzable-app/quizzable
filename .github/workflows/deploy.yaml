@@ -80,6 +80,8 @@ jobs:
         run: npm run build:ci
       - name: Deploy
         run: npm run deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Run e2e tests
         run: npm run test:ci --workspace e2e
         env:
