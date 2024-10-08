@@ -70,7 +70,6 @@ jobs:
           DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
           FIREBASE_AUTH_EMULATOR_HOST: "127.0.0.1:9099"
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "127.0.0.1:9099"
-          RESET_DB: true
       - uses: tmshkr/handle-env@v1.2
         with:
           filename: apps/functions/.env
@@ -83,11 +82,20 @@ jobs:
         run: npm run deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      - name: Run e2e tests
+      - name: Verify Deployment
         run: npm run test --workspace e2e
         env:
           BASE_URL: ${{ vars.BASE_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: |
+            packages/e2e/playwright-report/
+            packages/e2e/functions.log
+            packages/e2e/web.log
+          retention-days: 30
       - name: Cleanup
         if: always()
         run: shred -uv /opt/gcp_key.json
