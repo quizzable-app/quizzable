@@ -7,7 +7,7 @@ fi
 
 cd ../../
 
-if [ "$GITHUB_REF_NAME" == "main" ]; then
+if [ "$ENVIRONMENT" == "production" ]; then
     vercel deploy --prebuilt --prod --token $VERCEL_TOKEN
 else
     vercel deploy --prebuilt --token $VERCEL_TOKEN

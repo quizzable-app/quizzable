@@ -1,6 +1,13 @@
 name: Build, Test, Deploy, Verify
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: "Environment to deploy to"
+        options:
+          - "staging"
+          - "production"
   pull_request:
     branches:
       - main
@@ -13,7 +20,7 @@ jobs:
     if: github.event.pull_request.draft != true
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.47.2-noble
-    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    environment: ${{ inputs.environment || (github.ref_name == 'main' && 'production' || 'staging' )}}
     services:
       postgres:
         image: postgres
@@ -27,6 +34,7 @@ jobs:
     env:
       BASE_URL: ${{ vars.BASE_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      ENVIRONMENT: ${{ inputs.environment || (github.ref_name == 'main' && 'production' || 'staging' )}}
       FIREBASE_AUTH_EMULATOR_HOST: "127.0.0.1:9099"
       GOOGLE_APPLICATION_CREDENTIALS: "/opt/gcp_key.json"
       NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
@@ -56,6 +64,10 @@ jobs:
           firebase use ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
       - name: Test Firebase Functions
         run: npm run test --workspace functions
+      - name: Run e2e tests
+        run: npm run test:ci --workspace e2e
+        env:
+          BASE_URL: http://localhost:3000
       - uses: tmshkr/handle-env@v1.2
         with:
           filename: apps/functions/.env
@@ -66,6 +78,8 @@ jobs:
         run: npm run build:ci
       - name: Deploy
         run: npm run deploy
+      - name: Run e2e tests
+        run: npm run test:ci --workspace e2e
       - name: Cleanup
         if: always()
         run: shred -uv /opt/gcp_key.json
