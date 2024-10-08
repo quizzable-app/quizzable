@@ -1,4 +1,5 @@
 import { Page } from "playwright";
+import { Window } from "web/src/services/firebase/client/auth";
 const { BASE_URL, AUTH_TOKEN } = process.env;
 
 export async function signInToFirebase({ page }: { page: Page }) {
@@ -7,7 +8,7 @@ export async function signInToFirebase({ page }: { page: Page }) {
 
   await page.goto(BASE_URL);
   await page.evaluate(async (token: string) => {
-    await (globalThis as any).signInWithCustomToken(token);
+    await (window as any as Window).signInWithCustomToken(token);
   }, AUTH_TOKEN);
   await page.waitForURL("**/dashboard");
 }
