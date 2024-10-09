@@ -11,7 +11,7 @@ fi
 
 times=0
 while ! npx prisma db push; do
-    times=$((times + 1))
+    times=$(($times + 1))
     if [ $times -gt 5 ]; then
         echo "Failed to push database after 5 retries"
         exit 1
