@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "build:ci": "turbo run build:ci",
+    "build:ci": "turbo run build:ci --env-mode=loose",
     "deploy": "prisma db push && turbo run deploy --env-mode=loose",
     "dev": "prisma db push && turbo dev",
     "lint": "turbo lint",
