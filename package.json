@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "build:ci": "turbo run build:ci --env-mode=loose",
-    "deploy": "prisma db push && turbo run deploy --env-mode=loose",
+    "deploy": "./deploy.sh",
     "dev": "prisma db push && turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
