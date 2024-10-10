@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
+    "deploy": "./deploy.sh",
     "build": "next build",
+    "build:ci": "./build-ci.sh",
     "start": "next start",
     "lint": "next lint"
   },
@@ -16,7 +18,7 @@
     "@tailwindcss/forms": "^0.5.8",
     "cookies-next": "^4.2.1",
     "firebaseui": "^6.1.0",
-    "next": "14.2.6",
+    "next": "^14.2.13",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "server-only": "^0.0.1",

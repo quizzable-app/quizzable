@@ -7,6 +7,20 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     environment: test
+    container: mcr.microsoft.com/playwright:v1.47.2-noble
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
+      DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
+      FIREBASE_AUTH_EMULATOR_HOST: ${{ vars.FIREBASE_AUTH_EMULATOR_HOST }}
+      GOOGLE_APPLICATION_CREDENTIALS: "/opt/gcp_key.json"
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
+      TEST_USER_EMAIL: ${{ vars.TEST_USER_EMAIL }}
     services:
       postgres:
         image: postgres
@@ -19,10 +33,34 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "microsoft"
+          java-version: "17"
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci --no-optional
-      - run: npm run test --workspace functions
-        env:
-          TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
+          cache: "npm"
+      - name: Setup
+        run: |
+          npm ci
+          npm i -g firebase-tools
+          su -c "apt-get update && apt-get install tmux -y"
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 -d > /opt/gcp_key.json
+          firebase use dev
+      - name: Test Firebase Functions
+        run: npm run test --workspace functions
+      - name: Run e2e tests
+        run: npm run test --workspace e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: |
+            packages/e2e/playwright-report/
+            packages/e2e/functions.log
+            packages/e2e/web.log
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: shred -uv /opt/gcp_key.json

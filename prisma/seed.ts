@@ -1,15 +1,25 @@
 import { readFileSync } from "fs";
+import { resolve } from "path";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-seed();
-async function seed() {
-  const csv = readFileSync("./prisma/seed-data.csv", "utf-8")
+if (process.argv[1].endsWith("seed.ts")) {
+  seed()
+    .catch((e) => {
+      console.error(e);
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
+}
+
+export async function seed() {
+  const csv = readFileSync(resolve(__dirname, "seed-data.csv"), "utf-8")
     .split("\n")
     .map((line) =>
       line
         .split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/g)
-        .map((cell) => cell.replace(/["|\r]/g, ""))
+        .map((cell) => cell.replace(/["\r]/g, ""))
     );
 
   const org = await prisma.organization.create({

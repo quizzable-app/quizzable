@@ -1,0 +1,19 @@
+{
+  "name": "e2e",
+  "scripts": {
+    "test": "./test.sh"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@types/node": "^22.5.5",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.14.1",
+    "@playwright/test": "^1.47.2"
+  },
+  "prisma": {
+    "schema": "../../prisma/schema.prisma",
+    "seed": "tsx ../../prisma/seed.ts"
+  }
+}

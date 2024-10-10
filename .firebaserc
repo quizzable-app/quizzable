@@ -1,6 +1,7 @@
 {
   "projects": {
-    "prod": "quizzable-prod",
+    "production": "quizzable-prod",
+    "staging": "quizzable-staging",
     "dev": "quizzable-dev"
   }
 }

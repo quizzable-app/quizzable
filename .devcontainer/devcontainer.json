@@ -2,11 +2,36 @@
   "name": "quizzable-codespace",
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
-  "workspaceFolder": "/workspaces/quizzable",
+  "secrets": {
+    "FIREBASE_API_KEY": {},
+    "FIREBASE_APP_ID": {},
+    "FIREBASE_MESSAGING_SENDER_ID": {},
+    "FIREBASE_PROJECT_ID": {},
+    "FIREBASE_STORAGE_BUCKET": {}
+  },
+  "forwardPorts": [5433],
+  "portsAttributes": {
+    "5433": { "label": "PostgreSQL", "onAutoForward": "silent" }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": ".devcontainer/post-create.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
   "customizations": {
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode"]
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
+        "ms-vsliveshare.vsliveshare",
+        "prisma.prisma"
+      ]
     }
   }
 }

@@ -1,8 +1,18 @@
 "use client";
-
-import { getAuth, connectAuthEmulator } from "firebase/auth";
+/* eslint-disable no-unused-vars */
+import {
+  getAuth,
+  connectAuthEmulator,
+  signInWithCustomToken,
+} from "firebase/auth";
 import { useEmulators } from "../config";
 import { firebaseApp } from "./app";
+
+export interface Window {
+  signInWithCustomToken: (
+    token: string
+  ) => ReturnType<typeof signInWithCustomToken>;
+}
 
 export const firebaseAuth = getAuth(firebaseApp);
 if (useEmulators) {
@@ -15,4 +25,9 @@ export async function signOut() {
   } catch (error) {
     console.error("Error signing out with Google", error);
   }
+}
+
+if (typeof window !== "undefined") {
+  (window as any as Window).signInWithCustomToken = (token: string) =>
+    signInWithCustomToken(firebaseAuth, token);
 }
