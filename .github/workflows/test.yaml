@@ -20,6 +20,7 @@ jobs:
       NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
       TEST_DATABASE_URL: ${{ vars.TEST_DATABASE_URL }}
+      TEST_USER_EMAIL: ${{ vars.TEST_USER_EMAIL }}
     services:
       postgres:
         image: postgres
