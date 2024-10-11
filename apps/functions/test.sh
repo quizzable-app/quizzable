@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ -f .env ]; then
-    source .env
+    export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
 if [ -z "$TEST_DATABASE_URL" ]; then
@@ -9,7 +9,6 @@ if [ -z "$TEST_DATABASE_URL" ]; then
     exit 1
 fi
 
-export TEST_DATABASE_URL
 export DATABASE_URL=$TEST_DATABASE_URL
 prisma db push --force-reset
 vitest
