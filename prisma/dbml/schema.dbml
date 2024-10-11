@@ -1,0 +1,153 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Organization {
+  id BigInt [pk, increment]
+  canvasRootAccount String [unique, not null]
+  name String [not null]
+  Users User [not null]
+  Courses Course [not null]
+  Sections Section [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table User {
+  id BigInt [pk, increment]
+  canvasId BigInt [unique]
+  email String [unique, not null]
+  firebaseUid String [unique]
+  name String [not null]
+  organizationId BigInt
+  sisLoginId String
+  sisUserId String
+  Organization Organization
+  QuestionsCreated Question [not null]
+  QuizzesCreated Quiz [not null]
+  Roles Role[] [not null]
+  Scores Score [not null]
+  Sections Section [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (organizationId, sisLoginId) [unique]
+    (organizationId, sisUserId) [unique]
+  }
+}
+
+Table Course {
+  id BigInt [pk, increment]
+  name String [not null]
+  description String
+  organizationId BigInt [not null]
+  sisCourseId String [not null]
+  Organization Organization [not null]
+  Questions Question [not null]
+  Quizzes Quiz [not null]
+  Scores Score [not null]
+  Sections Section [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (organizationId, sisCourseId) [unique]
+  }
+}
+
+Table Section {
+  id BigInt [pk, increment]
+  name String [not null]
+  description String
+  courseId BigInt [not null]
+  organizationId BigInt [not null]
+  sisSectionId String [not null]
+  Course Course [not null]
+  Organization Organization [not null]
+  Quizzes Quiz [not null]
+  Scores Score [not null]
+  Users User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (organizationId, sisSectionId) [unique]
+  }
+}
+
+Table Question {
+  id BigInt [pk, increment]
+  answer Int[] [not null]
+  choices String[] [not null]
+  courseId BigInt [not null]
+  createdById BigInt [not null]
+  points Int [not null]
+  prompt String [not null]
+  timeAllotted Int [not null]
+  Courses Course [not null]
+  CreatedBy User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Quiz {
+  id BigInt [pk, increment]
+  courseId BigInt [not null]
+  createdById BigInt [not null]
+  sectionId BigInt [not null]
+  questions BigInt[] [not null]
+  CreatedBy User [not null]
+  Course Course [not null]
+  Section Section [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Score {
+  id BigInt [pk, increment]
+  userId BigInt [not null]
+  courseId BigInt [not null]
+  sectionId BigInt [not null]
+  points Int [not null]
+  pointsPossible Int [not null]
+  User User [not null]
+  Course Course [not null]
+  Section Section [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table SectionToUser {
+  sectionsId BigInt [ref: > Section.id]
+  usersId BigInt [ref: > User.id]
+}
+
+Enum Role {
+  INSTRUCTOR
+  STUDENT
+}
+
+Ref: User.organizationId > Organization.id
+
+Ref: Course.organizationId > Organization.id
+
+Ref: Section.courseId > Course.id
+
+Ref: Section.organizationId > Organization.id
+
+Ref: Question.courseId > Course.id
+
+Ref: Question.createdById > User.id
+
+Ref: Quiz.createdById > User.id
+
+Ref: Quiz.courseId > Course.id
+
+Ref: Quiz.sectionId > Section.id
+
+Ref: Score.userId > User.id
+
+Ref: Score.courseId > Course.id
+
+Ref: Score.sectionId > Section.id
