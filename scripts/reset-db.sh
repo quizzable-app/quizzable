@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [ -f .env ]; then
+if [[ -f .env && $LOAD_ENV != "false" ]]; then
     export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 

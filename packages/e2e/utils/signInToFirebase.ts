@@ -7,6 +7,7 @@ export async function signInToFirebase({ page }: { page: Page }) {
   if (!AUTH_TOKEN) throw new Error("AUTH_TOKEN is not defined");
 
   await page.goto(BASE_URL);
+  await page.waitForLoadState("networkidle");
   await page.evaluate(async (token: string) => {
     await (window as any as Window).signInWithCustomToken(token);
   }, AUTH_TOKEN);

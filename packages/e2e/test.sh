@@ -4,8 +4,13 @@ if [ -f .env ]; then
     export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
+if [ -n "$TEST_DATABASE_URL" ]; then
+    echo "Using TEST_DATABASE_URL..."
+    export DATABASE_URL=$TEST_DATABASE_URL
+fi
+
 if [ "$FIREBASE_AUTH_EMULATOR_HOST" == "127.0.0.1:9099" ]; then
-    ../../scripts/reset-db.sh
+    LOAD_ENV="false" ../../scripts/reset-db.sh
 
     if tmux new -d -s e2e 2>/dev/null; then
         tmux send-keys -t e2e 'npm run dev --workspace functions > functions.log 2>&1 & tail -f functions.log' C-m
